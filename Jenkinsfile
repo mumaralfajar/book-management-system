@@ -8,7 +8,6 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mumaralfajar/book-management-system']])
-                sh 'mvn clean install'
                 echo 'Git Checkout Completed'
             }
         }
