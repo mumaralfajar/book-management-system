@@ -1,60 +1,66 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven3'
-        jdk 'Java17'
-        docker 'Docker'
+        maven 'jenkins-maven'
     }
-    environment {
-        DOCKER_IMAGE = 'mumarual/book-management-system'
-        DOCKER_CONTAINER = 'book-management-system'
-    }
+
     stages {
-        stage('Checkout') {
+        stage('Git Checkout') {
             steps {
-                git 'https://github.com/mumaralfajar/book-management-system'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mumaralfajar/book-management-system']])
+                sh 'mvn clean install'
+                echo 'Git Checkout Completed'
             }
         }
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn clean verify sonar:sonar'
+                    sh 'mvn clean package'
+                    sh ''' mvn clean verify sonar:sonar -Dsonar.projectKey=book-management -Dsonar.projectName='book-management' -Dsonar.host.url=http://localhost:9000 '''
                     echo 'SonarQube Analysis Completed'
                 }
             }
         }
-        stage('Quality Gate') {
+        stage("Quality Gate") {
             steps {
                 waitForQualityGate abortPipeline: true
                 echo 'Quality Gate Completed'
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}")
-                    echo 'Docker Build Completed'
+                    sh 'docker build -t mumarual/book-management-system .'
+                    echo 'Build Docker Image Completed'
                 }
             }
         }
+
         stage('Docker Push') {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhub-password')]) {
                         sh ''' docker login -u mumarual -p "%dockerhub-password%" '''
                     }
-                    docker.image("${DOCKER_IMAGE}").push()
-                    echo 'Docker Push Completed'
+                    sh 'docker push mumarual/book-management-system'
                 }
             }
         }
+
         stage ('Docker Run') {
             steps {
                 script {
-                    docker.run("--name ${DOCKER_CONTAINER} -d -p 8099:8080 ${DOCKER_IMAGE}")
+                    sh 'docker run -d --name book-management-system -p 8099:8080 mumarual/book-management-system'
                     echo 'Docker Run Completed'
                 }
             }
+        }
+
+    }
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
