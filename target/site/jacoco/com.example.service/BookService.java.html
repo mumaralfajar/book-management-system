@@ -8,25 +8,29 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-<span class="fc" id="L11">public class BookService {</span>
+public class BookService {
+
+    private final BookRepository bookRepository;
 
     @Autowired
-    private BookRepository bookRepository;
+<span class="fc" id="L16">    public BookService(BookRepository bookRepository) {</span>
+<span class="fc" id="L17">        this.bookRepository = bookRepository;</span>
+<span class="fc" id="L18">    }</span>
 
     public List&lt;Book&gt; getAllBooks() {
-<span class="fc" id="L17">        return bookRepository.findAll();</span>
+<span class="fc" id="L21">        return bookRepository.findAll();</span>
     }
 
     public Book getBookById(Long id) {
-<span class="fc" id="L21">        return bookRepository.findById(id).orElse(null);</span>
+<span class="fc" id="L25">        return bookRepository.findById(id).orElse(null);</span>
     }
 
     public Book saveBook(Book book) {
-<span class="fc" id="L25">        return bookRepository.save(book);</span>
+<span class="fc" id="L29">        return bookRepository.save(book);</span>
     }
 
     public void deleteBook(Long id) {
-<span class="fc" id="L29">        bookRepository.deleteById(id);</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L33">        bookRepository.deleteById(id);</span>
+<span class="fc" id="L34">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

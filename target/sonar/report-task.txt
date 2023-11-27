@@ -2,5 +2,5 @@ projectKey=book-management
 serverUrl=http://localhost:9000
 serverVersion=10.3.0.82913
 dashboardUrl=http://localhost:9000/dashboard?id=book-management
-ceTaskId=AYv5JDRXUKgr68qOjNmU
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYv5JDRXUKgr68qOjNmU
+ceTaskId=AYwIPZneAf2H5qd0lMYo
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYwIPZneAf2H5qd0lMYo

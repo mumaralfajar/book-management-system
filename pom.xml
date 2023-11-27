@@ -26,7 +26,7 @@
     <sonar.projectKey>book-management</sonar.projectKey>
     <sonar.projectName>book-management</sonar.projectName>
     <sonar.host.url>http://localhost:9000</sonar.host.url>
-    <sonar.login>sqp_6e06d622c88277c94c4bfd0b8f04feeb534f2115</sonar.login>
+    <sonar.login>${sonar.login.token}</sonar.login>
   </properties>
 
   <dependencies>

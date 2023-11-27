@@ -1,3 +1,4 @@
 com\example\controller\BookControllerTest.class
 com\example\BookManagementSystemApplicationTests.class
+com\example\model\BookTest.class
 com\example\service\BookServiceTest.class

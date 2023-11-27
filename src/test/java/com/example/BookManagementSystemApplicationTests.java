@@ -6,9 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BookManagementSystemApplicationTests {
 
-    @Test
-    public void contextLoads() {
-        BookManagementSystemApplication.main(new String[] {});
-    }
+	@Test
+	void contextLoads() {
+		BookManagementSystemApplication.main(new String[] {});
+	}
 
 }
