@@ -14,7 +14,6 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn clean package'
                     sh ''' mvn clean verify sonar:sonar -Dsonar.projectKey=book-management -Dsonar.projectName='book-management' -Dsonar.host.url=http://localhost:9000 '''
                     echo 'SonarQube Analysis Completed'
                 }
